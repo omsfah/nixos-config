@@ -1,8 +1,8 @@
 { config, lib, pkgs, inputs, values, ... }:
 
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
     domain = lib.mkDefault "home.hafsmo.net";
