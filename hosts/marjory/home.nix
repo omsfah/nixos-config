@@ -14,6 +14,7 @@
   pkgs.prusa-slicer
   pkgs.libreoffice
   pkgs.alacritty
+  pkgs.tldr
   ];
 
   home.stateVersion = "23.05";
