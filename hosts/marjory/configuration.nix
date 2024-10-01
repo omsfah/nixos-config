@@ -30,6 +30,22 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  
+
+    # kanshi systemd service
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    environment = {
+      WAYLAND_DISPLAY="wayland-1";
+      DISPLAY = ":0";
+    }; 
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
+    };
+  };  
+
+  
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -44,6 +60,17 @@
     layout = "no";
     variant = "colemak";
   };
+  
+  services.greetd = {                                                      
+    enable = true;                                                         
+    settings = {                                                           
+      default_session = {                                                  
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+        user = "omsfah"; #Something wrong here                                                 
+      };                                                                   
+    };                                                                     
+  };
+  
 
   # Configure console keymap
   console.keyMap = "no";
@@ -53,7 +80,10 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  security = {
+  rtkit.enable = true;
+  polkit.enable = true; #Sway dependency, see https://wiki.nixos.org/wiki/Sway#Using_Home_Manager
+  };
   services.pipewire = {
     enable = true;
     alsa.enable = true;

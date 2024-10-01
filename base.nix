@@ -54,6 +54,7 @@
     nix-output-monitor
     p7zip
     python3
+    ranger
     rclone
     ripgrep
     rsync
