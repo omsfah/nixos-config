@@ -11,6 +11,10 @@
         relativenumber = true;
       };
     };
+    git = {
+      userName = "Olaf Hafsmo";
+      userEmail = "olafhafsmo@gmail.com";
+    };
   };
   home.packages = with pkgs; [
     firefox
