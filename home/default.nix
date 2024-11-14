@@ -3,17 +3,25 @@
 
   programs = {
     zsh.shellAliases."rebuild" = "sudo nixos-rebuild switch --flake ~/git/nixos-config";
+    zsh.enable = true;
+    vim = {
+      enable = true;
+      defaultEditor = true;
+      settings = {
+        relativenumber = true;
+      };
+    };
   };
-  home.packages= [
-  pkgs.firefox
-  pkgs.vim
-  pkgs.kicad
-  pkgs.discord
-  pkgs.logseq
-  pkgs.prusa-slicer
-  pkgs.libreoffice
-  pkgs.alacritty
-  pkgs.tldr
+  home.packages = with pkgs; [
+    firefox
+    kicad
+    discord
+    logseq
+    prusa-slicer
+    libreoffice
+    alacritty
+    tldr
+    autotiling-rs
   ];
   
 

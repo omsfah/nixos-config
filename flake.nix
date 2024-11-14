@@ -49,13 +49,35 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users."omsfah" = import ./hosts/marjory/home.nix;
+              home-manager.users."omsfah" = import ./home;
               home-manager.backupFileExtension = "bac";
               home-manager.extraSpecialArgs = {inherit nix-colors inputs;};
             }
             #need to choose one. The nixos one has bootloader and display manager in addition to the home manager one.
           ];
         };
+        wembley = nixpkgs.lib.nixosSystem {
+          system = "x84_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            # Overlays-module makes "pkgs.unstable" available in configuration.nix
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ./hosts/wembley/configuration.nix
+            sops-nix.nixosModules.sops
+            nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users."omsfah" = import ./home;
+              home-manager.backupFileExtension = "bac";
+              home-manager.extraSpecialArgs = {inherit nix-colors inputs;};
+            }
+            #need to choose one. The nixos one has bootloader and display manager in addition to the home manager one.
+          ];
+        };
+
       };
     };
 }
