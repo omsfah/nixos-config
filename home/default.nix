@@ -15,7 +15,19 @@
       userName = "Olaf Hafsmo";
       userEmail = "olafhafsmo@gmail.com";
     };
+    swaylock = {
+      enable = true;
+      settings = {
+        color = "808080";
+        font-size = 24;
+        indicator-idle-visible = false;
+        indicator-radius = 100;
+        line-color = "ffffff";
+        show-failed-attempts = true;
+        };
+    };
   };
+
   home.packages = with pkgs; [
     firefox
     kicad
@@ -25,7 +37,9 @@
     libreoffice
     alacritty
     tldr
-    autotiling-rs
+    logseq
+    element-desktop
+    bluetuith
   ];
   
 
@@ -38,12 +52,16 @@
           xkb_layout = "no";
           xkb_variant = "colemak";
         };
+#        keybindings = {
+#          "${modifier} + l"= "exec swaylock";
+#        };
       };
-	      modifier = "Mod4";
+      modifier = "Mod4";
       terminal = "alacritty"; 
       startup = [
         # Launch Firefox on start
-        {command = "exec sleep 5; systemctl --user start kanshi.service";}
+        {command = "sleep 5; systemctl --user start kanshi.service";}
+        {command = "${pkgs.autotiling-rs}/bin/autotiling-rs";} #Adds autotiling dynamically when sway is enabled.
       ];
     };
   };
