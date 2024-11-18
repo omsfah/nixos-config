@@ -29,17 +29,16 @@
   };
 
   home.packages = with pkgs; [
+    alacritty
+    bluetuith
+    discord
+    element-desktop
     firefox
     kicad
-    discord
+    libreoffice
     logseq
     prusa-slicer
-    libreoffice
-    alacritty
     tldr
-    logseq
-    element-desktop
-    bluetuith
   ];
   
 
@@ -53,10 +52,10 @@
           xkb_variant = "colemak";
         };
       };
-      keybindings = {
+      modifier = "Mod4";
+      keybindings = lib.mkOptionDefault { #By importing keybinds with mkOptionDefault it appends the keybind. If you only specify a keybind nixos won't import default keybinds from /etc/sway/config, so you'll need to add all keybinds
         "Mod1+Shift+l" = "exec swaylock";
       };
-      modifier = "Mod4";
       terminal = "alacritty"; 
       startup = [
         # Launch Firefox on start
