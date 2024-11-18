@@ -52,9 +52,9 @@
           xkb_layout = "no";
           xkb_variant = "colemak";
         };
-#        keybindings = {
-#          "${modifier} + l"= "exec swaylock";
-#        };
+      };
+      keybindings = {
+        "Mod1+Shift+l" = "exec swaylock";
       };
       modifier = "Mod4";
       terminal = "alacritty"; 
