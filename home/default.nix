@@ -72,6 +72,51 @@
         { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock"; }
       ];
     };
+
+    kanshi = {
+      enable = true;
+      systemdTarget = "";
+      settings = [
+        {
+          profile.name = "undocked";
+          profile.outputs = [
+            {
+              criteria = "BOE 0x084D Unknown";
+              status = "enable";
+            }
+          ];
+        }
+        {
+          profile.name = "home_office";
+          profile.outputs = [
+            {
+              criteria = "BOE 0x084D Unknown";
+              position = "2370,0";
+              mode = "1920x1080@144";
+              transform = "normal";
+            }
+            {
+              criteria = "Dell Inc. DELL U3818DW 5KC037B9066L";
+              position = "1440,1080";
+              mode = "3840x1600@60";
+              transform = "normal";
+            }
+            {
+              criteria = "Lenovo Group Limited LEN P27h-10 0x5A503047";
+              position = "0,600";
+              mode = "2560x1440@60";
+              transform = "90";
+            }
+            {
+              criteria = "Lenovo Group Limited LEN P27h-10 0x4C503044";
+              position = "5280,600";
+              mode = "2560x1440@60";
+              transform = "270";
+            }
+          ];
+        }
+      ];
+    };
   };
 
   home.stateVersion = "23.05";
