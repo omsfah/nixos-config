@@ -75,7 +75,7 @@
 
     kanshi = {
       enable = true;
-      systemdTarget = "";
+      systemdTarget = "sway-session.target";
       settings = [
         {
           profile.name = "undocked";
