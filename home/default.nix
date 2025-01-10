@@ -39,6 +39,8 @@
     logseq
     prusa-slicer
     tldr
+    vscode
+    freecad-wayland
   ];
   
 
@@ -63,8 +65,17 @@
         {command = "${pkgs.autotiling-rs}/bin/autotiling-rs";} #Adds autotiling dynamically when sway is enabled.
       ];
     };
+    extraOptions = [
+      "--unsupported-gpu"
+    ];
   };
 
+  xdg.mimeApps = {
+    enable=true;
+    defaultApplications = {
+      "application/pdf" = ["firefox.desktop"];
+    };
+  };
   services = {
     swayidle = {
       enable = true;
@@ -112,6 +123,63 @@
               position = "5280,600";
               mode = "2560x1440@60";
               transform = "270";
+            }
+          ];
+        }
+        {
+          profile.name = "guru_office";
+          profile.outputs = [
+            {
+              criteria = "BOE 0x084D Unknown";
+              position = "860,1440";
+              mode = "1920x1080@144";
+              transform = "normal";
+            }
+            {
+              criteria = "Dell Inc. DELL U3421WE C2BZ653";
+              position = "0,0";
+              mode = "3440x1440@59.97";
+              transform = "normal";
+            }
+          ];
+        }
+        {
+          profile.name = "portable_office";
+          profile.outputs = [
+            {
+              criteria = "BOE 0x084D Unknown";
+              position = "0,0";
+              mode = "1920x1080@144";
+              transform = "normal";
+            }
+            {
+              criteria = "ASUSTek COMPUTER INC ASUS MB166C MCLMTF049368";
+              position = "1920,0";
+              mode = "1920x1080@60";
+              transform = "normal";
+            }
+          ];
+        }
+        {
+          profile.name = "batchelor-portable";
+          profile.outputs = [
+            {
+              criteria = "BOE 0x084D Unknown";
+              position = "1920,0";
+              mode = "1920x1080@144";
+              transform = "normal";
+            }
+            {
+              criteria = "ASUSTek COMPUTER INC ASUS MB166C MCLMTF049368";
+              position = "0,0";
+              mode = "1920x1080@60";
+              transform = "normal";
+            }
+            {
+              criteria = "NEC Corporation EA273WM 38112446NB";
+              position = "3840,0";
+              mode = "1920x1080@60";
+              transform = "normal";
             }
           ];
         }

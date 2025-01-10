@@ -25,6 +25,33 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  ##
+  #  Wireguard
+  ##
+
+  networking.firewall={
+    allowedUDPPorts = [ 51820 ];
+  };
+  # Enable WireGuard
+  networking.wireguard.enable = true;
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "192.168.60.5/32" ];
+      listenPort = 51820;
+      privateKey = "qBWWRPZKlhEv7Q1S7WA/CkuPuKo+o1DrXVGwhosY8EU=";
+      peers = [
+        {
+          publicKey = "NsbcClYKPutKXWLyjBPIGlJUE4HZbmZsg3Nt+h9OLAw=";
+          presharedKeyFile = "/home/omsfah/wireguard_presharedkey.psk";
+          allowedIPs = [ "192.168.0.0/16" ];
+          name = "test";
+          endpoint = "vpn.hafsmo.net:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Oslo";
 
@@ -82,6 +109,7 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+  hardware.spacenavd.enable = true;
   security = {
   rtkit.enable = true;
   polkit.enable = true; #Sway dependency, see https://wiki.nixos.org/wiki/Sway#Using_Home_Manager
@@ -98,7 +126,7 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
+  
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -133,9 +161,50 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    pavucontrol
+    mesa
+    vulkan-tools
+    spacenavd
+    spacenav-cube-example
   ];
+#  environment.variables = {
+#    WLR_SCENE_DISABLE_DIRECT_SCANOUT = "1";
+#    WLR_RENDERER = "vulkan";
+#  };
+
+  services.xserver = {
+    videoDrivers = [ "nouveau" ];
+  };
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      mesa
+      mesa.drivers
+    ];
+  };
+  ##
+  # Nvidia
+  ##
+#  services.xserver.videoDrivers =["nvidia"];
+#  hardware = {
+#    graphics.enable = true;
+#    nvidia = {
+#      modesetting.enable = true;
+#      powerManagement.enable = false;
+#      open = true;
+#      nvidiaSettings = true;
+#      package = config.boot.kernelPackages.nvidiaPackages.stable;
+#      prime = {
+#        sync.enable = true;
+#        intelBusId = "PCI:0:2:0";
+#        nvidiaBusId = "PCI:1:0:0";
+#      };
+#    };
+#    graphics.extraPackages = with pkgs; [
+#      vulkan-validation-layers
+#    ];
+#  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -162,5 +231,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
