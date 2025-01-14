@@ -31,6 +31,8 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Docker support
+  virtualisation.docker.enable = true;
 
   # kanshi systemd service
   systemd.user.services.kanshi = {
@@ -94,7 +96,7 @@
   users.users.omsfah = {
     isNormalUser = true;
     description = "omsfah";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
     #  thunderbird
     ];

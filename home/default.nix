@@ -36,7 +36,8 @@
     firefox
     kicad
     libreoffice
-    logseq
+#    logseq
+    mako
     prusa-slicer
     tldr
     vscode
@@ -82,6 +83,9 @@
       timeouts = [
         { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock"; }
       ];
+    };
+    mako = {
+      enable = true;
     };
 
     kanshi = {
@@ -161,23 +165,17 @@
           ];
         }
         {
-          profile.name = "batchelor-portable";
+          profile.name = "batchelor";
           profile.outputs = [
             {
-              criteria = "BOE 0x084D Unknown";
-              position = "1920,0";
-              mode = "1920x1080@144";
-              transform = "normal";
-            }
-            {
-              criteria = "ASUSTek COMPUTER INC ASUS MB166C MCLMTF049368";
+              criteria = "NEC Corporation EA273WM 38112443NB";
               position = "0,0";
               mode = "1920x1080@60";
               transform = "normal";
             }
             {
-              criteria = "NEC Corporation EA273WM 38112446NB";
-              position = "3840,0";
+              criteria = "NEC Corporation EA273WMi 51115330NB   ";
+              position = "1920,0";
               mode = "1920x1080@60";
               transform = "normal";
             }
@@ -187,6 +185,6 @@
     };
   };
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.11";
 }
 
