@@ -24,7 +24,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-
+  virtualisation.docker.enable = true;
   ##
   #  Wireguard
   ##
@@ -134,7 +134,7 @@
   users.users.omsfah = {
     isNormalUser = true;
     description = "Olaf Hafsmo";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
   };
 
   # Install firefox.
@@ -166,6 +166,7 @@
     vulkan-tools
     spacenavd
     spacenav-cube-example
+    docker
   ];
 #  environment.variables = {
 #    WLR_SCENE_DISABLE_DIRECT_SCANOUT = "1";
