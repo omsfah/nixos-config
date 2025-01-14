@@ -15,7 +15,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "wembley"; # Define your hostname.
+  networking.hostName = "boober"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -24,61 +24,32 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  virtualisation.docker.enable = true;
-  ##
-  #  Wireguard
-  ##
-
-  networking.firewall={
-    allowedUDPPorts = [ 51820 ];
-  };
-  # Enable WireGuard
-  networking.wireguard.enable = true;
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "192.168.60.5/32" ];
-      listenPort = 51820;
-      privateKey = "qBWWRPZKlhEv7Q1S7WA/CkuPuKo+o1DrXVGwhosY8EU=";
-      peers = [
-        {
-          publicKey = "NsbcClYKPutKXWLyjBPIGlJUE4HZbmZsg3Nt+h9OLAw=";
-          presharedKeyFile = "/home/omsfah/wireguard_presharedkey.psk";
-          allowedIPs = [ "192.168.0.0/16" ];
-          name = "test";
-          endpoint = "vpn.hafsmo.net:51820";
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
 
   # Set your time zone.
   time.timeZone = "Europe/Oslo";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  
 
-    # kanshi systemd service
+
+  # kanshi systemd service
   systemd.user.services.kanshi = {
     description = "kanshi daemon";
     environment = {
       WAYLAND_DISPLAY="wayland-1";
       DISPLAY = ":0";
-    }; 
+    };
     serviceConfig = {
       Type = "simple";
       ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
     };
-  };  
+  };
 
-  
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
-  # Enable the Gnome Desktop Environment.
+  # Enable the GNOME Desktop Environment.
   services.displayManager.sessionPackages = [ pkgs.sway ]; # Dependency for sway in gddm
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -89,17 +60,6 @@
     layout = "no";
     variant = "colemak";
   };
-  
-#  services.greetd = {                                                      
-#    enable = true;                                                         
-#    settings = {                                                           
-#      default_session = {                                                  
-#        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-#        user = "omsfah"; #Something wrong here                                                 
-#      };                                                                   
-#    };                                                                     
-#  };
-  
 
   # Configure console keymap
   console.keyMap = "no";
@@ -109,11 +69,11 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
-  hardware.spacenavd.enable = true;
   security = {
-  rtkit.enable = true;
-  polkit.enable = true; #Sway dependency, see https://wiki.nixos.org/wiki/Sway#Using_Home_Manager
+    rtkit.enable = true;
+    polkit.enable = true; #Sway dependency, see https://wiki.nixos.org/wiki/Sway#Using_Home_Manager
   };
+  
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -126,15 +86,18 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-  
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.omsfah = {
     isNormalUser = true;
-    description = "Olaf Hafsmo";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    description = "omsfah";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+    #  thunderbird
+    ];
   };
 
   # Install firefox.
@@ -146,66 +109,21 @@
   };
   # Install Steam
   programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  #Electron support for discord
-  #nixpkgs.config.permittedInsecurePackages = [
-  #              "electron-27.3.11"
-  #            ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    pavucontrol
-    mesa
-    vulkan-tools
-    spacenavd
-    spacenav-cube-example
-    docker
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
   ];
-#  environment.variables = {
-#    WLR_SCENE_DISABLE_DIRECT_SCANOUT = "1";
-#    WLR_RENDERER = "vulkan";
-#  };
-
-  services.xserver = {
-    videoDrivers = [ "nouveau" ];
-  };
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      mesa
-      mesa.drivers
-    ];
-  };
-  ##
-  # Nvidia
-  ##
-#  services.xserver.videoDrivers =["nvidia"];
-#  hardware = {
-#    graphics.enable = true;
-#    nvidia = {
-#      modesetting.enable = true;
-#      powerManagement.enable = false;
-#      open = true;
-#      nvidiaSettings = true;
-#      package = config.boot.kernelPackages.nvidiaPackages.stable;
-#      prime = {
-#        sync.enable = true;
-#        intelBusId = "PCI:0:2:0";
-#        nvidiaBusId = "PCI:1:0:0";
-#      };
-#    };
-#    graphics.extraPackages = with pkgs; [
-#      vulkan-validation-layers
-#    ];
-#  };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -233,4 +151,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
+
 }

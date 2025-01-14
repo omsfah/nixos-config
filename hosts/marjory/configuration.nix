@@ -117,9 +117,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   #Electron support for discord
-  nixpkgs.config.permittedInsecurePackages = [
-                "electron-27.3.11"
-              ];
+  #nixpkgs.config.permittedInsecurePackages = [
+  #              "electron-27.3.11"
+  #            ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
