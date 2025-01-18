@@ -12,8 +12,13 @@
       };
     };
     git = {
+      enable = true;
       userName = "Olaf Hafsmo";
       userEmail = "olafhafsmo@gmail.com";
+      extraConfig = {
+        push.autoSetupRemote = true;
+      };
+
     };
     swaylock = {
       enable = true;
@@ -78,13 +83,19 @@
     };
   };
   services = {
+    
     swayidle = {
       enable = true;
       timeouts = [
         { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock"; }
       ];
     };
+    
     mako = {
+      enable = true;
+    };
+
+    flameshot = {
       enable = true;
     };
 
