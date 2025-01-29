@@ -2,8 +2,10 @@
 {
 
   programs = {
-    zsh.shellAliases."rebuild" = "sudo nixos-rebuild switch --flake ~/git/nixos-config";
     zsh.enable = true;
+    zsh.shellAliases = {
+      rebuild = "sudo nixos-rebuild switch --flake ~/git/nixos-config";
+    };
     vim = {
       enable = true;
       defaultEditor = true;
@@ -30,7 +32,13 @@
         line-color = "ffffff";
         show-failed-attempts = true;
         };
-    };
+      };
+#      vscode = {
+#        enable = true;
+#        extensions = with pkgs.vscode-extensions; [
+#          myriad-dreamin.tinymist
+#        ];
+#      };
   };
 
   home.packages = with pkgs; [
@@ -45,8 +53,9 @@
     mako
     prusa-slicer
     tldr
-    vscode
+    vscode-fhs
     freecad-wayland
+    sway-contrib.grimshot
   ];
   
 
@@ -62,7 +71,8 @@
       };
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault { #By importing keybinds with mkOptionDefault it appends the keybind. If you only specify a keybind nixos won't import default keybinds from /etc/sway/config, so you'll need to add all keybinds
-        "Mod1+Shift+l" = "exec swaylock";
+      "Mod1+Shift+l" = "exec swaylock";
+      "Mod1+Shift+s" = "exec grimshot --notify copy anything";
       };
       terminal = "alacritty"; 
       startup = [
@@ -95,9 +105,6 @@
       enable = true;
     };
 
-    flameshot = {
-      enable = true;
-    };
 
     kanshi = {
       enable = true;
