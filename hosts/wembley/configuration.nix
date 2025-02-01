@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../base.nix
+      ../../development-tools/nordic-semiconductor.nix
     ];
 
   # Bootloader.
@@ -24,7 +25,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
   ##
   #  Wireguard
   ##
@@ -33,24 +34,26 @@
     allowedUDPPorts = [ 51820 ];
   };
   # Enable WireGuard
-  networking.wireguard.enable = true;
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "192.168.60.5/32" ];
-      listenPort = 51820;
-      privateKey = "qBWWRPZKlhEv7Q1S7WA/CkuPuKo+o1DrXVGwhosY8EU=";
-      peers = [
-        {
-          publicKey = "NsbcClYKPutKXWLyjBPIGlJUE4HZbmZsg3Nt+h9OLAw=";
-          presharedKeyFile = "/home/omsfah/wireguard_presharedkey.psk";
-          allowedIPs = [ "192.168.0.0/16" ];
-          name = "test";
-          endpoint = "vpn.hafsmo.net:51820";
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
+  #networking.wireguard.enable = true;
+  #networking.wireguard.interfaces = {
+  #  wg3 = {
+  #    ips = [ "192.168.60.2/32" ];
+  #    listenPort = 51820;
+  #    privateKey = "CGBPf97nIQ58nNzKZt8fVtcFu5CHRtjClOQ2kneUkFE=";
+  #    peers = [
+  #      {
+  #        publicKey = "RmnnNjOKFb9Z/oCXaWQtuWQh4sghSABVn5zjJgoFSxQ=";
+  #        presharedKey = "GY98tmdqNsosZjaf5h72YcWradd6bs6WMPR3GgHubFE=";
+  #        allowedIPs = [ 
+  #                       "0.0.0.0/0"
+  #                       "::/0" 
+  #                   ];
+  #        name = "NIX";
+  #        endpoint = "vpn.hafsmo.net:51820";
+  #      }
+  #    ];
+  #  };
+  #};
 
   # Set your time zone.
   time.timeZone = "Europe/Oslo";
@@ -166,8 +169,9 @@
     vulkan-tools
     spacenavd
     spacenav-cube-example
-    docker
   ];
+
+
 #  environment.variables = {
 #    WLR_SCENE_DISABLE_DIRECT_SCANOUT = "1";
 #    WLR_RENDERER = "vulkan";
