@@ -53,6 +53,7 @@
     mako
     prusa-slicer
     tldr
+    typst
     vscode-fhs
     freecad-wayland
     sway-contrib.grimshot
@@ -72,7 +73,7 @@
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault { #By importing keybinds with mkOptionDefault it appends the keybind. If you only specify a keybind nixos won't import default keybinds from /etc/sway/config, so you'll need to add all keybinds
       "Mod1+Shift+l" = "exec swaylock";
-      "Mod1+Shift+s" = "exec grimshot --notify copy anything";
+      "Mod4+Shift+s" = "exec grimshot --notify copy anything";
       };
       terminal = "alacritty"; 
       startup = [
