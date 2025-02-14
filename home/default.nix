@@ -47,6 +47,7 @@
     discord
     element-desktop
     firefox
+    nix-index
     kicad
     libreoffice
 #    logseq

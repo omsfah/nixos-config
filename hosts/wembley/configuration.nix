@@ -87,6 +87,19 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
+  services.udev.extraRules = ''
+# 71-nrf.rules
+ACTION!="add", SUBSYSTEM!="usb_device", GOTO="nrf_rules_end"
+
+# Set /dev/bus/usb/*/* as read-write for all users (0666) for Nordic Semiconductor devices
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", MODE="0666"
+
+# Flag USB CDC ACM devices, handled later in 99-mm-nrf-blacklist.rules
+# Set USB CDC ACM devnodes as read-write for all users
+KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1915", MODE="0666", ENV{NRF_CDC_ACM}="1"
+
+LABEL="nrf_rules_end"
+    '';
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "no";
@@ -169,8 +182,8 @@
     vulkan-tools
     spacenavd
     spacenav-cube-example
+    roboto
   ];
-
 
 #  environment.variables = {
 #    WLR_SCENE_DISABLE_DIRECT_SCANOUT = "1";
