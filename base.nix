@@ -1,5 +1,6 @@
 { config, lib, pkgs, inputs, values, ... }:
 
+
 {
   #boot.loader.systemd-boot.enable = true;
   #boot.loader.efi.canTouchEfiVariables = true;
@@ -38,6 +39,8 @@
   };
 
   programs.zsh.enable = true;
+
+  hardware.opentabletdriver.enable = true;
 
   environment.systemPackages = with pkgs; [
     bottom
@@ -89,6 +92,7 @@
     extraGroups = [
       "wheel"
       "docker"
+      "input"
     ];
     uid = lib.mkDefault 1000;
     openssh.authorizedKeys.keys = lib.mkDefault [

@@ -44,12 +44,14 @@
   home.packages = with pkgs; [
     alacritty
     bluetuith
+    brave
     discord
     element-desktop
-    firefox
-    kicad
+    unstable.kicad
+    kicadAddons.kikit
+#    kicadAddons.kikit-library
     libreoffice
-#    logseq
+    logseq
     mako
     prusa-slicer
     tldr
@@ -93,6 +95,7 @@
       "application/pdf" = ["firefox.desktop"];
     };
   };
+  
   services = {
     
     swayidle = {
